@@ -1,0 +1,2308 @@
+<html class="scroll-smooth" lang="id">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Sistem Penilaian Hasil Belajar - Dashboard
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+    font-family: 'Poppins', sans-serif;
+  }
+  @keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+  .flash {
+    animation: flash 1.5s infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+  }
+  #dashboardMain.flash-animate h2 {
+    animation: flash 1.5s infinite;
+  }
+  .logo-bg-white {
+    background-color: white;
+    display: inline-block;
+    border-radius: 9999px;
+    padding: 0.5rem;
+  }
+  .logo-bg-white.flash {
+    animation: flash 1.5s infinite;
+  }
+  .card-button {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+    background-color: white;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    text-align: left;
+  }
+  .card-button:hover,
+  .card-button:focus {
+    box-shadow: 0 10px 15px rgb(59 130 246 / 0.4);
+    transform: translateY(-3px);
+    outline: none;
+  }
+  .card-button img {
+    border-radius: 9999px;
+    border: 2px solid #2563eb;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .card-content {
+    flex: 1;
+  }
+  .card-title {
+    font-weight: 600;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+  }
+  .card-subtitle {
+    color: #2563eb;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+  .card-icon {
+    font-size: 3rem;
+    color: #2563eb;
+    flex-shrink: 0;
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+  }
+  .category-button {
+    background-color: white;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    font-weight: 600;
+    border-radius: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 1 !important;
+  }
+  .category-button:hover,
+  .category-button:focus {
+    background-color: #bfdbfe;
+    outline: none;
+  }
+  .name-button {
+    background-color: white;
+    border: 1px solid #60a5fa;
+    color: #1e40af;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    opacity: 1 !important;
+  }
+  .name-button:hover,
+  .name-button:focus {
+    background-color: #93c5fd;
+    outline: none;
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes success-bounce {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+  }
+  @keyframes pulseScale {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px 5px rgba(37, 99, 235, 0.3);
+    }
+  }
+  h1,
+  h2 {
+    animation: fadeInDown 1s ease forwards;
+    opacity: 0;
+  }
+  p {
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+  }
+  button,
+  nav a,
+  nav button {
+    opacity: 1 !important;
+  }
+  #page-login {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+  }
+  .login-container {
+    background: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.3);
+    max-width: 420px;
+    width: 100%;
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+  }
+  .login-container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, #3b82f6 0%, transparent 70%);
+    animation: pulse 6s ease-in-out infinite;
+    z-index: 0;
+    border-radius: 1.5rem;
+  }
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.5;
+    }
+  }
+  .login-logo {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 1.5rem;
+    border-radius: 9999px;
+    border: 3px solid #2563eb;
+    background-color: #e0e7ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    animation: flash 1.5s infinite;
+  }
+  .login-logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  .login-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .login-label {
+    display: block;
+    font-weight: 600;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .login-input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  .login-input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 2px solid #2563eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    outline-offset: 2px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  .login-input:focus {
+    border-color: #1e40af;
+    box-shadow: 0 0 8px #2563ebaa;
+    outline: none;
+  }
+  .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #2563eb;
+    font-size: 1.25rem;
+    z-index: 2;
+    user-select: none;
+  }
+  .login-button {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 700;
+    padding: 0.85rem 1rem;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.6);
+  }
+  .login-button:hover,
+  .login-button:focus {
+    background-color: #1e40af;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.9);
+    outline: none;
+  }
+  #backToListBtn {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    border: none;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    text-align: center;
+    transition: color 0.3s ease;
+  }
+  #backToListBtn:hover,
+  #backToListBtn:focus {
+    color: #1e40af;
+    outline: none;
+    text-decoration: underline;
+  }
+  #loginNameDisplay {
+    background-color: #000000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    display: block;
+    color: white;
+    font-weight: 700;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .contact-admin {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #2563eb;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+    text-decoration: none;
+    justify-content: center;
+  }
+  .contact-admin:hover,
+  .contact-admin:focus {
+    color: #1e40af;
+    outline: none;
+    text-decoration: underline;
+  }
+  .contact-admin i {
+    font-size: 1.5rem;
+  }
+  /* Notification styles */
+  #notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-width: 320px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  #notification.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  #notification.success {
+    background-color: #16a34a;
+  }
+  #notification.error {
+    background-color: #dc2626;
+  }
+  #notification i {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  #notification.success i {
+    animation: success-bounce 0.6s ease-in-out infinite;
+  }
+  /* Hide login page inside other pages */
+  #page-dashboard #page-login,
+  #page-guru-ikhwan #page-login,
+  #page-guru-akhwat #page-login,
+  #page-wali-ikhwan #page-login,
+  #page-wali-akhwat #page-login,
+  #page-mapel-list #page-login {
+    display: none !important;
+  }
+  /* Mapel list container */
+  #mapelList {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 1.5rem;
+    max-width: 700px;
+  }
+  /* Mapel card style */
+  .mapel-card {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  .mapel-card:hover,
+  .mapel-card:focus {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.7);
+    outline: none;
+  }
+  .mapel-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: #bfdbfe;
+    animation: pulseScale 2.5s ease-in-out infinite;
+  }
+  .mapel-subtitle {
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: #dbeafe;
+    margin-top: 0.25rem;
+    text-align: center;
+  }
+  /* Custom colors for buttons containing specific class names */
+  .mapel-card.kelas-imam-ahmad {
+    background-color: #1e40af; /* Dark Blue */
+  }
+  .mapel-card.kelas-imam-ahmad:hover,
+  .mapel-card.kelas-imam-ahmad:focus {
+    background-color: #2563eb; /* Blue */
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.9);
+  }
+  .mapel-card.kelas-imam-malik {
+    background-color: #b45309; /* Amber/Dark Yellow */
+  }
+  .mapel-card.kelas-imam-malik:hover,
+  .mapel-card.kelas-imam-malik:focus {
+    background-color: #f59e0b; /* Amber */
+    box-shadow: 0 12px 30px rgba(245, 158, 11, 0.9);
+  }
+  .mapel-card.kelas-imam-syafii {
+    background-color: #065f46; /* Dark Green */
+  }
+  .mapel-card.kelas-imam-syafii:hover,
+  .mapel-card.kelas-imam-syafii:focus {
+    background-color: #10b981; /* Emerald */
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.9);
+  }
+  @keyframes pulseScale {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px 5px rgba(37, 99, 235, 0.3);
+    }
+  }
+  </style>
+ </head>
+ <body class="bg-gray-50 min-h-screen flex flex-col">
+  <!-- Cover Page -->
+  <section class="bg-gradient-to-b from-blue-600 to-blue-900 min-h-screen flex items-center justify-center px-6" id="cover">
+   <main class="text-center max-w-4xl w-full bg-white bg-opacity-20 backdrop-blur-md rounded-3xl p-10 shadow-lg relative">
+    <span class="logo-bg-white mx-auto w-32 h-32 flex items-center justify-center mb-8 flash">
+     <img alt="Logo SMPS IT IMAM SYAFII, a modern stylized emblem with blue and white colors, symbolizing education and technology" class="w-28 h-28 object-contain" decoding="async" loading="lazy" src="https://iili.io/F2YLJ3b.md.png"/>
+    </span>
+    <h1 class="text-white text-5xl sm:text-6xl font-extrabold mb-2 drop-shadow-lg leading-tight">
+     SISTEM PENILAIAN HASIL BELAJAR
+    </h1>
+    <h2 class="text-white text-3xl sm:text-4xl font-semibold mb-6 drop-shadow-md leading-snug">
+     SMPS IT IMAM SYAFII
+    </h2>
+    <p class="text-white text-lg sm:text-xl mb-10 px-6 sm:px-0 drop-shadow-md max-w-3xl mx-auto leading-relaxed">
+     Selamat datang di sistem penilaian hasil belajar yang memudahkan guru
+        dan siswa dalam memantau perkembangan akademik secara efektif dan
+        efisien.
+    </p>
+    <button class="inline-flex items-center gap-3 bg-white text-blue-900 font-semibold rounded-full px-10 py-4 shadow-lg hover:bg-blue-100 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg sm:text-xl" id="startBtn" type="button">
+     <span>
+      Mulai Sekarang
+     </span>
+     <i class="fas fa-bolt text-yellow-400 text-2xl">
+     </i>
+    </button>
+   </main>
+  </section>
+  <!-- Dashboard Page -->
+  <section class="hidden flex flex-col min-h-screen bg-gray-50" id="dashboard">
+   <header class="bg-white shadow sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+     <div class="flex items-center gap-3">
+      <span class="logo-bg-white flex items-center justify-center w-10 h-10 flash">
+       <img alt="Logo SMPS IT IMAM SYAFII, a modern stylized emblem with blue and white colors, symbolizing education and technology" class="w-8 h-8 object-contain" decoding="async" loading="lazy" src="https://iili.io/F2YLJ3b.md.png"/>
+      </span>
+      <h1 class="text-2xl font-bold text-blue-900" id="welcomeMessage">
+       Dashboard
+      </h1>
+     </div>
+     <nav class="hidden md:flex space-x-8 text-blue-700 font-semibold">
+      <a class="flex items-center gap-1 hover:text-blue-900 transition" data-page="dashboard" href="#dashboard">
+       <i class="fas fa-home">
+       </i>
+       Beranda
+      </a>
+      <div class="relative group">
+       <button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1 hover:text-blue-900 transition font-semibold focus:outline-none" id="guruMapelBtn" type="button">
+        <i class="fas fa-chalkboard-teacher">
+        </i>
+        Guru Mapel
+        <i class="fas fa-caret-down text-sm">
+        </i>
+       </button>
+       <div class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 invisible group-hover:visible group-focus-within:visible transition-opacity z-50">
+        <button class="block w-full text-left px-4 py-2 text-blue-700 hover:bg-blue-100 font-semibold" id="btnGuruMapelIkhwan" type="button">
+         <i class="fas fa-male mr-2">
+         </i>
+         Guru Mapel Ikhwan
+        </button>
+        <button class="block w-full text-left px-4 py-2 text-blue-700 hover:bg-blue-100 font-semibold" id="btnGuruMapelAkhwat" type="button">
+         <i class="fas fa-female mr-2">
+         </i>
+         Guru Mapel Akhwat
+        </button>
+       </div>
+      </div>
+      <div class="relative group">
+       <button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1 hover:text-blue-900 transition font-semibold focus:outline-none" id="waliKelasBtn" type="button">
+        <i class="fas fa-user-tie">
+        </i>
+        Wali Kelas
+        <i class="fas fa-caret-down text-sm">
+        </i>
+       </button>
+       <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 invisible group-hover:visible group-focus-within:visible transition-opacity z-50">
+        <button class="block w-full text-left px-4 py-2 text-blue-700 hover:bg-blue-100 font-semibold" id="btnWaliKelasIkhwan" type="button">
+         <i class="fas fa-male mr-2">
+         </i>
+         Wali Kelas Ikhwan
+        </button>
+        <button class="block w-full text-left px-4 py-2 text-blue-700 hover:bg-blue-100 font-semibold" id="btnWaliKelasAkhwat" type="button">
+         <i class="fas fa-female mr-2">
+         </i>
+         Wali Kelas Akhwat
+        </button>
+       </div>
+      </div>
+      <div class="relative group">
+       <button aria-expanded="false" aria-haspopup="true" class="flex items-center gap-1 hover:text-blue-900 transition font-semibold focus:outline-none" id="laporanBtn" type="button">
+        <i class="fas fa-file-alt">
+        </i>
+        Laporan
+        <i class="fas fa-caret-down text-sm">
+        </i>
+       </button>
+       <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 invisible group-hover:visible group-focus-within:visible transition-opacity z-50">
+        <a class="block px-4 py-2 text-blue-700 hover:bg-blue-100" href="#laporan-pimpinan">
+         <i class="fas fa-user-shield mr-2">
+         </i>
+         Pimpinan
+        </a>
+        <a class="block px-4 py-2 text-blue-700 hover:bg-blue-100" href="#laporan-orang-tua">
+         <i class="fas fa-users mr-2">
+         </i>
+         Orang Tua
+        </a>
+       </div>
+      </div>
+     </nav>
+     <button aria-label="Toggle menu" class="md:hidden text-blue-900 focus:outline-none" id="menuToggle">
+      <i class="fas fa-bars text-2xl">
+      </i>
+     </button>
+    </div>
+    <nav aria-label="Mobile menu" class="hidden md:hidden bg-white shadow-md px-6 py-4 space-y-4 text-blue-700 font-semibold" id="mobileMenu">
+     <a class="flex items-center gap-2 hover:text-blue-900 transition" data-page="dashboard" href="#dashboard">
+      <i class="fas fa-home">
+      </i>
+      Beranda
+     </a>
+     <div>
+      <button aria-controls="mobileGuruMapelMenu" aria-expanded="false" class="w-full flex justify-between items-center hover:text-blue-900 transition font-semibold focus:outline-none" id="mobileGuruMapelBtn" type="button">
+       <span>
+        <i class="fas fa-chalkboard-teacher mr-1">
+        </i>
+        Guru Mapel
+       </span>
+       <i class="fas fa-caret-down text-sm">
+       </i>
+      </button>
+      <div class="hidden mt-2 pl-4 space-y-1" id="mobileGuruMapelMenu">
+       <button class="flex items-center gap-2 hover:bg-blue-100 rounded px-3 py-1 w-full text-left font-semibold" id="mobileBtnGuruMapelIkhwan" type="button">
+        <i class="fas fa-male">
+        </i>
+        Guru Mapel Ikhwan
+       </button>
+       <button class="flex items-center gap-2 hover:bg-blue-100 rounded px-3 py-1 w-full text-left font-semibold" id="mobileBtnGuruMapelAkhwat" type="button">
+        <i class="fas fa-female">
+        </i>
+        Guru Mapel Akhwat
+       </button>
+      </div>
+     </div>
+     <div>
+      <button aria-controls="mobileWaliKelasMenu" aria-expanded="false" class="w-full flex justify-between items-center hover:text-blue-900 transition font-semibold focus:outline-none" id="mobileWaliKelasBtn" type="button">
+       <span>
+        <i class="fas fa-user-tie mr-1">
+        </i>
+        Wali Kelas
+       </span>
+       <i class="fas fa-caret-down text-sm">
+       </i>
+      </button>
+      <div class="hidden mt-2 pl-4 space-y-1" id="mobileWaliKelasMenu">
+       <button class="flex items-center gap-2 hover:bg-blue-100 rounded px-3 py-1 w-full text-left font-semibold" id="mobileBtnWaliKelasIkhwan" type="button">
+        <i class="fas fa-male">
+        </i>
+        Wali Kelas Ikhwan
+       </button>
+       <button class="flex items-center gap-2 hover:bg-blue-100 rounded px-3 py-1 w-full text-left font-semibold" id="mobileBtnWaliKelasAkhwat" type="button">
+        <i class="fas fa-female">
+        </i>
+        Yani Octavia, S.Pd.
+       </button>
+      </div>
+     </div>
+     <div>
+      <button aria-controls="mobileLaporanMenu" aria-expanded="false" class="w-full flex justify-between items-center hover:text-blue-900 transition font-semibold focus:outline-none" id="mobileLaporanBtn" type="button">
+       <span>
+        <i class="fas fa-file-alt mr-1">
+        </i>
+        Laporan
+       </span>
+       <i class="fas fa-caret-down text-sm">
+       </i>
+      </button>
+      <div class="hidden mt-2 pl-4 space-y-1" id="mobileLaporanMenu">
+       <a class="flex items-center gap-2 hover:bg-blue-100 rounded px-3 py-1" href="#laporan-pimpinan">
+        <i class="fas fa-user-shield">
+        </i>
+        Pimpinan
+       </a>
+       <a class="flex items-center gap-2 hover:bg-blue-100 rounded px-3 py-1" href="#laporan-orang-tua">
+        <i class="fas fa-users">
+        </i>
+        Orang Tua
+       </a>
+      </div>
+     </div>
+    </nav>
+   </header>
+   <div class="flex flex-1 max-w-7xl mx-auto w-full px-6 py-6 gap-6 flex-col md:flex-row">
+    <!-- Sidebar -->
+    <aside aria-label="Sidebar navigation" class="hidden md:flex flex-col w-full md:w-64 bg-white rounded-2xl shadow-lg p-6 sticky top-20 h-[calc(100vh-5rem)] shrink-0 overflow-y-auto">
+     <nav class="flex flex-col space-y-4 text-blue-800 font-semibold text-lg">
+      <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-100 transition" data-page="dashboard" href="#dashboard">
+       <i class="fas fa-home text-xl">
+       </i>
+       Beranda
+      </a>
+      <div>
+       <button aria-controls="sidebarGuruMapelMenu" aria-expanded="false" class="w-full flex items-center justify-between px-4 py-3 font-semibold text-blue-900 rounded-lg hover:bg-blue-100 transition focus:outline-none" id="sidebarGuruMapelBtn" type="button">
+        <span>
+         <i class="fas fa-chalkboard-teacher mr-1">
+         </i>
+         Guru Mapel
+        </span>
+        <i class="fas fa-caret-down">
+        </i>
+       </button>
+       <nav aria-label="Guru Mapel submenu" class="hidden flex flex-col ml-4 mt-2 space-y-2 text-blue-700" id="sidebarGuruMapelMenu">
+        <button class="px-4 py-2 rounded-lg hover:bg-blue-100 transition flex items-center gap-2 w-full text-left font-semibold" id="sidebarBtnGuruMapelIkhwan" type="button">
+         <i class="fas fa-male">
+         </i>
+         Guru Mapel Ikhwan
+        </button>
+        <button class="px-4 py-2 rounded-lg hover:bg-blue-100 transition flex items-center gap-2 w-full text-left font-semibold" id="sidebarBtnGuruMapelAkhwat" type="button">
+         <i class="fas fa-female">
+         </i>
+         Guru Mapel Akhwat
+        </button>
+       </nav>
+      </div>
+      <div>
+       <button aria-controls="sidebarWaliKelasMenu" aria-expanded="false" class="w-full flex items-center justify-between px-4 py-3 font-semibold text-blue-900 rounded-lg hover:bg-blue-100 transition focus:outline-none" id="sidebarWaliKelasBtn" type="button">
+        <span>
+         <i class="fas fa-user-tie mr-1">
+         </i>
+         Wali Kelas
+        </span>
+        <i class="fas fa-caret-down">
+        </i>
+       </button>
+       <nav aria-label="Wali Kelas submenu" class="hidden flex flex-col ml-4 mt-2 space-y-2 text-blue-700" id="sidebarWaliKelasMenu">
+        <button class="px-4 py-2 rounded-lg hover:bg-blue-100 transition flex items-center gap-2 w-full text-left font-semibold" id="sidebarBtnWaliKelasIkhwan" type="button">
+         <i class="fas fa-male">
+         </i>
+         Wali Kelas Ikhwan
+        </button>
+        <button class="px-4 py-2 rounded-lg hover:bg-blue-100 transition flex items-center gap-2 w-full text-left font-semibold" id="sidebarBtnWaliKelasAkhwat" type="button">
+         <i class="fas fa-female">
+         </i>
+         Wali Kelas Akhwat
+        </button>
+       </nav>
+      </div>
+      <div>
+       <button aria-controls="sidebarLaporanMenu" aria-expanded="false" class="w-full flex items-center justify-between px-4 py-3 font-semibold text-blue-900 rounded-lg hover:bg-blue-100 transition focus:outline-none" id="sidebarLaporanBtn" type="button">
+        <span>
+         <i class="fas fa-file-alt mr-1">
+         </i>
+         Laporan
+        </span>
+        <i class="fas fa-caret-down">
+        </i>
+       </button>
+       <nav aria-label="Laporan submenu" class="hidden flex flex-col ml-4 mt-2 space-y-2 text-blue-700" id="sidebarLaporanMenu">
+        <a class="px-4 py-2 rounded-lg hover:bg-blue-100 transition" href="#laporan-pimpinan">
+         <i class="fas fa-user-shield mr-2">
+         </i>
+         Pimpinan
+        </a>
+        <a class="px-4 py-2 rounded-lg hover:bg-blue-100 transition" href="#laporan-orang-tua">
+         <i class="fas fa-users mr-2">
+         </i>
+         Orang Tua
+        </a>
+       </nav>
+      </div>
+     </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 bg-white rounded-2xl shadow-lg p-8 overflow-hidden flex flex-col" id="dashboardMain">
+     <!-- Dashboard Home Content -->
+     <section id="page-dashboard">
+      <h2 class="text-3xl font-bold text-blue-900 mb-8" id="dashboardWelcome">
+       Selamat Datang di Dashboard
+      </h2>
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12" id="summary">
+       <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="text-lg font-semibold">
+          Rata-rata Nilai
+         </h3>
+         <i class="fas fa-chart-line text-3xl opacity-80">
+         </i>
+        </div>
+        <p class="text-5xl font-extrabold">
+         85.6
+        </p>
+        <p class="mt-2 text-sm opacity-80">
+         Nilai rata-rata seluruh siswa
+        </p>
+       </div>
+       <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="text-lg font-semibold">
+          Nilai Tertinggi
+         </h3>
+         <i class="fas fa-trophy text-3xl opacity-80">
+         </i>
+        </div>
+        <p class="text-5xl font-extrabold">
+         98
+        </p>
+        <p class="mt-2 text-sm opacity-80">
+         Nilai tertinggi semester ini
+        </p>
+       </div>
+       <div class="bg-gradient-to-r from-red-500 to-red-600 text-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="text-lg font-semibold">
+          Nilai Terendah
+         </h3>
+         <i class="fas fa-arrow-down text-3xl opacity-80">
+         </i>
+        </div>
+        <p class="text-5xl font-extrabold">
+         60
+        </p>
+        <p class="mt-2 text-sm opacity-80">
+         Nilai terendah semester ini
+        </p>
+       </div>
+       <div class="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-2xl shadow-lg p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-4">
+         <h3 class="text-lg font-semibold">
+          Jumlah Siswa
+         </h3>
+         <i class="fas fa-users text-3xl opacity-80">
+         </i>
+        </div>
+        <p class="text-5xl font-extrabold">
+         120
+        </p>
+        <p class="mt-2 text-sm opacity-80">
+         Total siswa terdaftar
+        </p>
+       </div>
+      </section>
+     </section>
+     <!-- Guru Mapel Ikhwan List with Mapel Buttons and Cards -->
+     <section class="hidden flex flex-col mb-12" id="page-guru-ikhwan">
+      <h2 class="text-3xl font-bold text-blue-900 mb-6 border-b-4 border-blue-600 inline-block pb-1">
+       Guru Mapel Ikhwan
+      </h2>
+      <div class="flex flex-wrap gap-4 mb-6 max-w-5xl">
+       <button aria-pressed="true" class="category-button max-w-xs" id="btnMapelUmumIkhwan" type="button">
+        <i class="fas fa-user-tie mr-2">
+        </i>
+        Daftar Guru Mapel Umum
+       </button>
+       <button aria-pressed="false" class="category-button max-w-xs" id="btnMapelDiniyahIkhwan" type="button">
+        <i class="fas fa-pray mr-2">
+        </i>
+        Daftar Guru Mapel Diniyah
+       </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl" id="listGuruMapelUmum" style="display:none;">
+       <button aria-label="AGUNG FITRA SUGANDA,S.Hum, male teacher icon" class="card-button" data-login="guru-agung" data-mapel="umum" data-name="AGUNG FITRA SUGANDA, S.Hum" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">AGUNG FITRA SUGANDA, S.Hum</h4>
+         <p class="card-subtitle">Guru IPS</p>
+        </div>
+       </button>
+       <button aria-label="BENNY FADLULLAH,S.Pd.,Gr, male teacher icon" class="card-button" data-login="guru-beny" data-mapel="umum" data-name="BENNY FADLULLOH, S.Pd.,Gr" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">BENNY FADLULLOH, S.Pd.,Gr</h4>
+         <p class="card-subtitle">Guru IPA</p>
+        </div>
+       </button>
+       <button aria-label="Agus, male teacher icon" class="card-button" data-login="guru-agus" data-mapel="umum" data-name="Agus" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">DETLAMASI AGUSTIN,S.Si</h4>
+         <p class="card-subtitle">Guru IPA</p>
+        </div>
+       </button>
+       <button aria-label="JEFRI, S.Pd, male teacher icon" class="card-button" data-login="guru-jr" data-mapel="umum" data-name="JEFRI, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">JEFRI, S.Pd</h4>
+         <p class="card-subtitle">Guru Pendidikan Pancasila</p>
+        </div>
+       </button>
+       <button aria-label="JERY SAPUTRA, S.Pd, male teacher icon" class="card-button" data-login="guru-jery" data-mapel="umum" data-name="JERY SAPUTRA, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">JERY SAPUTRA, S.Pd</h4>
+         <p class="card-subtitle">Guru Bahasa Indonesia</p>
+        </div>
+       </button>
+       <button aria-label="Jo, male teacher icon" class="card-button" data-login="guru-jo" data-mapel="umum" data-name="Jo" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">JOHAN KHADAFI,S.Pd.,Gr</h4>
+         <p class="card-subtitle">Guru Matematika</p>
+        </div>
+       </button>
+       <button aria-label="Khaidir, male teacher icon" class="card-button" data-login="guru-khaidir" data-mapel="umum" data-name="Khaidir" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Khaidir,S.Pd</h4>
+         <p class="card-subtitle">Guru Bahasa Indonesia</p>
+        </div>
+       </button>
+       <button aria-label="Afdal, male teacher icon" class="card-button" data-login="guru-afdal" data-mapel="umum" data-name="Afdal" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M.AFDAL,S.Pd</h4>
+         <p class="card-subtitle">Guru Matematika</p>
+        </div>
+       </button>
+       <button aria-label="Parhun, male teacher icon" class="card-button" data-login="guru-parhun" data-mapel="umum" data-name="Parhun" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">PARHUN,S.Pd</h4>
+         <p class="card-subtitle">Guru Bahasa Inggris</p>
+        </div>
+       </button>
+       <button aria-label="Hadi, male teacher icon" class="card-button" data-login="guru-hadi" data-mapel="umum" data-name="Hadi" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">RISNULHADI,S.Pd.,Gr</h4>
+         <p class="card-subtitle">Guru IPA</p>
+        </div>
+       </button>
+       <button aria-label="Roni, male teacher icon" class="card-button" data-login="guru-roni" data-mapel="umum" data-name="Roni" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">RONI IRAWANS.Pd</h4>
+         <p class="card-subtitle">Guru Bahasa Indonesia</p>
+        </div>
+       </button>
+       <button aria-label="Tsaqif, male teacher icon" class="card-button" data-login="guru-tsaqif" data-mapel="umum" data-name="Tsaqif" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">TSAQIF</h4>
+         <p class="card-subtitle">Guru TIK</p>
+        </div>
+       </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl" id="listGuruMapelIkhwan" style="display:none;">
+       <button aria-label="Asrul, male teacher icon" class="card-button" data-login="guru-asrul" data-mapel="diniyah" data-name="Asrul" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">ASRUL HARIANSYAH PASARIBU, S.KOM.I.,Gr</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Ikhwan</p>
+        </div>
+       </button>
+       <button aria-label="Okta, male teacher icon" class="card-button" data-login="guru-okta" data-mapel="diniyah" data-name="Okta" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">FITRA OKTA,S.Ag</h4>
+         <p class="card-subtitle">Guru Al-Qur'an</p>
+        </div>
+       </button>
+       <button aria-label="Reza, male teacher icon" class="card-button" data-login="guru-reza" data-mapel="diniyah" data-name="Reza" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. SYAHREZA HERNANDES,S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Ikhwan</p>
+        </div>
+       </button>
+       <button aria-label="Irfan, male teacher icon" class="card-button" data-login="guru-irfan" data-mapel="diniyah" data-name="Irfan" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">IRFAN SUHADI,S.Ag</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Ikhwan</p>
+        </div>
+       </button>
+       <button aria-label="SABRAN ZALUKHU,S.Sos, male teacher icon" class="card-button" data-login="guru-sabran" data-mapel="diniyah" data-name="Sabran" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">SABRAN ZALUKHU,S.Sos</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Ikhwan</p>
+        </div>
+       </button>
+       <button aria-label="SUHAIMI,S.Pd, male teacher icon" class="card-button" data-login="guru-suhaimi" data-mapel="diniyah" data-name="Suhaimi" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">SUHAIMI,S.Pd</h4>
+         <p class="card-subtitle">Guru Tarikh/SKI</p>
+        </div>
+       </button>
+       <button aria-label="Zulfendi, male teacher icon" class="card-button" data-login="guru-zulfendi" data-mapel="diniyah" data-name="Zulfendi" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">ZULFENDI,S.Pd</h4>
+         <p class="card-subtitle">Guru Nahwu</p>
+        </div>
+       </button>
+       <button aria-label="Ridho, male teacher icon" class="card-button" data-login="guru-ridho" data-mapel="diniyah" data-name="Ridho" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">MUHAMMAD RASYID RIDHO,S.H</h4>
+         <p class="card-subtitle">Guru Khot & Nahwu</p>
+        </div>
+       </button>
+      </div>
+     </section>
+     <!-- Guru Mapel Akhwat List with Mapel Buttons and Cards -->
+     <section class="hidden flex flex-col mb-12" id="page-guru-akhwat">
+      <h2 class="text-3xl font-bold text-blue-900 mb-6 border-b-4 border-blue-600 inline-block pb-1">
+       Guru Mapel Akhwat
+      </h2>
+      <div class="flex flex-wrap gap-4 mb-6 max-w-5xl">
+       <button aria-pressed="true" class="category-button max-w-xs" id="btnMapelUmumAkhwat" type="button">
+        <i class="fas fa-book-open mr-2">
+        </i>
+        Mapel Umum
+       </button>
+       <button aria-pressed="false" class="category-button max-w-xs" id="btnMapelDiniyahAkhwat" type="button">
+        <i class="fas fa-pray mr-2">
+        </i>
+        Mapel Diniyah
+       </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl" id="listGuruMapelAkhwat">
+       <button aria-label="BEVI LIDIA, S.Si, female teacher icon" class="card-button" data-login="guru-bevi" data-mapel="umum" data-name="BEVI LIDIA, S.Si" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">BEVI LIDIA, S.Si</h4>
+         <p class="card-subtitle">Guru Mapel Umum Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="ERLINA DESWITA, S.Pd, female teacher icon" class="card-button" data-login="guru-erlina" data-mapel="umum" data-name="ERLINA DESWITA, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">ERLINA DESWITA, S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Bahasa Inggris Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="HERLINA, S.Tr.AB, female teacher icon" class="card-button" data-login="guru-herlina" data-mapel="umum" data-name="HERLINA, S.Tr.AB" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">HERLINA, S.Tr.AB</h4>
+         <p class="card-subtitle">Guru Mapel TIK Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="IKA OKTAVIA, S.Pd, female teacher icon" class="card-button" data-login="guru-ika" data-mapel="umum" data-name="IKA OKTAVIA, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">IKA OKTAVIA, S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel IPA TERPADU Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="LUSI RAHMAYANI, S.Pd, female teacher icon" class="card-button" data-login="guru-lusi" data-mapel="umum" data-name="LUSI RAHMAYANI, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">LUSI RAHMAYANI, S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel IPA TERPADU Ikhwan</p>
+        </div>
+       </button>
+       <button aria-label="MELIKA SURYA S.Pd, female teacher icon" class="card-button" data-login="guru-melika" data-mapel="umum" data-name="MELIKA SURYA S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">MELIKA SURYA S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Matematika Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="NABILA HUDA, S.Pd S.Pd, female teacher icon" class="card-button" data-login="guru-nabila" data-mapel="umum" data-name="NABILA HUDA, S.Pd S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">NABILA HUDA, S.Pd S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Bahasa Indonesia Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="SRI AYUNI, S.Pd, female teacher icon" class="card-button" data-login="guru-sri-ayuni" data-mapel="umum" data-name="SRI AYUNI, S.Pd." type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">SRI AYUNI, S.Pd.</h4>
+         <p class="card-subtitle">Guru Mapel Umum Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="RYRY FEBRIANTI, S,H S.Pd, female teacher icon" class="card-button" data-login="guru-ryry" data-mapel="umum" data-name="RYRY FEBRIANTI, S,H S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">RYRY FEBRIANTI, S,H S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Pendidikan Pancasila Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="Mira Purwanti, S.Pd, female teacher icon" class="card-button" data-login="guru-mira" data-mapel="diniyah" data-name="Mira Purwanti, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Mira Purwanti, S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="Nur Aini Oda, S.Ag, female teacher icon" class="card-button" data-login="guru-nur" data-mapel="diniyah" data-name="Nur Aini Oda, S.Ag" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Nur Aini Oda, S.Ag</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="Ulfah Khairunna Ramadhan, S.Pd, female teacher icon" class="card-button" data-login="guru-ulfah" data-mapel="diniyah" data-name="Ulfah Khairunna Ramadhan, S.Pd" type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Ulfah Khairunna Ramadhan, S.Pd</h4>
+         <p class="card-subtitle">Guru Mapel Diniyah Akhwat</p>
+        </div>
+       </button>
+       <button aria-label="Yani Octavia, S.Pd." class="card-button" data-login="wali-yani-octavia" data-mapel="diniyah" data-name="Yani Octavia, S.Pd." type="button">
+        <i class="fas fa-user-tie card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Yani Octavia, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas VII Asma</p>
+        </div>
+       </button>
+      </div>
+     </section>
+     <!-- Wali Kelas Ikhwan List with Cards -->
+     <section class="hidden flex flex-col mb-12" id="page-wali-ikhwan">
+      <h2 class="text-3xl font-bold text-blue-900 mb-6 border-b-4 border-blue-600 inline-block pb-1">
+       Wali Kelas Ikhwan
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl" id="waliIkhwanList">
+       <button aria-label="M. Syahreza, S.Pd." class="card-button" data-login="wali-syahreza" data-name="M. Syahreza, S.Pd." type="button">
+        <i class="fas fa-male card-icon">
+        </i>
+        <div class="card-content">
+         <h4 class="card-title">
+          M. Syahreza, S.Pd.
+         </h4>
+         <p class="card-subtitle">
+          Wali Kelas VII Imam Ahmad
+         </p>
+        </div>
+       </button>
+       <button aria-label="Sabran Zalukhu, S.Sos." class="card-button" data-login="wali-sabran" data-name="Sabran Zalukhu, S.Sos." type="button">
+        <i class="fas fa-male card-icon">
+        </i>
+        <div class="card-content">
+         <h4 class="card-title">
+          Sabran Zalukhu, S.Sos.
+         </h4>
+         <p class="card-subtitle">
+          Wali Kelas VII Imam Malik
+         </p>
+        </div>
+       </button>
+       <button aria-label="M. Afdal, S.Pd." class="card-button" data-login="wali-afdal" data-name="M. Afdal, S.Pd." type="button">
+        <i class="fas fa-male card-icon">
+        </i>
+        <div class="card-content">
+         <h4 class="card-title">
+          M. Afdal, S.Pd.
+         </h4>
+         <p class="card-subtitle">
+          Wali Kelas Imam Syafi'i
+         </p>
+        </div>
+       </button>
+      </div>
+     </section>
+     <!-- Wali Kelas VII Akhwat List with Cards -->
+     <section class="hidden flex flex-col mb-12" id="page-wali-akhwat">
+      <h2 class="text-3xl font-bold text-blue-900 mb-6 border-b-4 border-blue-600 inline-block pb-1">
+       Wali Kelas Akhwat
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl">
+       <button aria-label="Sri Ayuni, S.Pd, Wali Kelas VII Maryam" class="card-button" data-login="wali-sri-ayuni" data-name="Sri Ayuni, S.Pd" type="button">
+        <i class="fas fa-female card-icon">
+        </i>
+        <div class="card-content">
+         <h4 class="card-title">
+          Sri Ayuni, S.Pd
+         </h4>
+         <p class="card-subtitle">
+          Wali Kelas VII Maryam
+         </p>
+        </div>
+       </button>
+       <button aria-label="Yani Octavia, S.Pd." class="card-button" data-login="wali-yani-octavia" data-name="Yani Octavia, S.Pd." type="button">
+        <i class="fas fa-female card-icon">
+        </i>
+        <div class="card-content">
+         <h4 class="card-title">
+          Yani Octavia, S.Pd.
+         </h4>
+         <p class="card-subtitle">
+          Wali Kelas VII Asma
+         </p>
+        </div>
+       </button>
+      </div>
+     </section>
+     <!-- Login Page -->
+     <section class="hidden flex flex-col items-center justify-center" id="page-login">
+      <div class="login-container w-full max-w-md">
+       <div class="login-logo flash">
+        <img alt="Logo SMPS IT IMAM SYAFII, a modern stylized emblem with blue and white colors, symbolizing education and technology" decoding="async" loading="lazy" src="https://iili.io/F2YLJ3b.md.png"/>
+       </div>
+       <h2 class="login-title" id="loginTitle">
+       </h2>
+       <form id="loginForm" novalidate="">
+        <p class="mb-6 font-semibold text-lg" id="loginNameDisplay" style="
+                  background-color: #000000;
+                  color: white;
+                  border-radius: 0.375rem;
+                  padding: 0.5rem 1rem;
+                  width: 100%;
+                  max-width: 100%;
+                  box-sizing: border-box;
+                  text-align: center;
+                  margin-bottom: 1.5rem;
+                ">
+        </p>
+        <label class="login-label" for="password">
+         Password
+        </label>
+        <div class="login-input-wrapper">
+         <input autocomplete="current-password" class="login-input" id="password" name="password" required="" type="password"/>
+         <i aria-label="Tampilkan atau sembunyikan password" class="fas fa-eye password-toggle" id="togglePassword" role="button" tabindex="0">
+         </i>
+        </div>
+        <button class="login-button" type="submit">
+         Masuk
+        </button>
+       </form>
+       <button class="mt-4 text-blue-600 hover:underline focus:outline-none" id="backToListBtn" type="button">
+        Kembali ke Daftar
+       </button>
+       <a aria-label="Hubungi admin via WhatsApp" class="contact-admin" href="https://wa.me/6282285537275" rel="noopener noreferrer" target="_blank">
+        <i class="fab fa-whatsapp">
+        </i>
+        Hubungi Admin
+       </a>
+      </div>
+     </section>
+     <!-- Mapel List Page -->
+     <section class="hidden flex flex-col max-w-5xl" id="page-mapel-list">
+      <h2 class="text-4xl font-extrabold text-blue-900 mb-8 border-b-4 border-blue-600 pb-2" id="mapelListTitle">
+       Daftar Mapel yang Diajar oleh
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" id="mapelList">
+      </div>
+      <button class="mt-8 self-start bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg transition focus:outline-none focus:ring-4 focus:ring-blue-300 flex items-center gap-2" id="backToGuruIkhwanBtn" type="button">
+       <i class="fas fa-arrow-left">
+       </i>
+       Kembali ke Daftar Guru Ikhwan
+      </button>
+     </section>
+    </main>
+   </div>
+   <footer class="bg-white shadow-inner py-6 text-center text-gray-600 text-sm">
+    © 2024 SMPS IT IMAM SYAFII. Semua hak cipta dilindungi.
+   </footer>
+  </section>
+  <!-- Notification container -->
+  <div aria-atomic="true" aria-live="assertive" class="" id="notification" role="alert">
+   <i class="" id="notificationIcon">
+   </i>
+   <span id="notificationMessage">
+   </span>
+  </div>
+  <script>
+   const startBtn = document.getElementById('startBtn');
+    const coverSection = document.getElementById('cover');
+    const dashboardSection = document.getElementById('dashboard');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const dashboardMain = document.getElementById('dashboardMain');
+    const loginTitle = document.getElementById('loginTitle');
+    const loginNameDisplay = document.getElementById('loginNameDisplay');
+    const loginForm = document.getElementById('loginForm');
+    const backToListBtn = document.getElementById('backToListBtn');
+    const dashboardWelcome = document.getElementById('dashboardWelcome');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const notification = document.getElementById('notification');
+    const notificationIcon = document.getElementById('notificationIcon');
+    const notificationMessage = document.getElementById('notificationMessage');
+
+    const pageGuruIkhwan = document.getElementById('page-guru-ikhwan');
+    const pageMapelList = document.getElementById('page-mapel-list');
+    const mapelList = document.getElementById('mapelList');
+    const mapelListTitle = document.getElementById('mapelListTitle');
+    const backToGuruIkhwanBtn = document.getElementById('backToGuruIkhwanBtn');
+
+    // Wali Kelas Ikhwan container
+    const waliIkhwanList = document.getElementById('waliIkhwanList');
+
+    // Wali Kelas Google Spreadsheet links by exact user name
+const waliKelasSpreadsheetLinks = {
+  "M. Syahreza, S.Pd.": {
+    password: "reza",
+    url: "https://docs.google.com/spreadsheets/d/1VNH5jKgySqeu3O6MZ6pdlDO_adhRwNCKT3XQB6_QKkM/edit?usp=drive_link"
+  },
+  "Sabran Zalukhu, S.Sos.": {
+    password: "sabran",
+    url: "https://docs.google.com/spreadsheets/d/1N6KRbBBpjuXDoH9j59gSBt1WYsU6xJ7FPyuOfXGyJY8/edit?usp=drive_link"
+  },
+  "M. Afdal, S.Pd.": {
+    password: "afdal",
+    url: "https://docs.google.com/spreadsheets/d/14bBhpA_V15G9PWzaxGrQBUBaCC8mxe-dbFvDIDC9tDw/edit?usp=drive_link"
+  },
+  "Sri Ayuni, S.Pd": {
+    password: "yuyun",
+    url: "https://docs.google.com/spreadsheets/d/14bBhpA_V15G9PWzaxGrQBUBaCC8mxe-dbFvDIDC9tDw/edit?usp=drive_link"
+  },
+  "Yani Octavia, S.Pd.": {
+    password: "yani",
+    url: "https://docs.google.com/spreadsheets/d/1sDgvyCKeGq9ufPO2OK0Un-lPNQu1029lJrYTCMG7C8I/edit?usp=drive_link"
+  }
+};
+
+    function showNotification(type, message, duration = 500) {
+      notification.className = '';
+      notification.classList.add(type, 'show');
+      if (type === 'success') {
+        notificationIcon.className = 'fas fa-check-circle';
+        notificationMessage.textContent = message;
+      } else if (type === 'error') {
+        notificationIcon.className = 'fas fa-exclamation-circle';
+        notificationMessage.textContent = `😢 ${message}`;
+      }
+      clearTimeout(notification.timeoutId);
+      notification.timeoutId = setTimeout(() => {
+        notification.classList.remove('show');
+      }, duration);
+    }
+
+    startBtn.addEventListener('click', () => {
+      startBtn.disabled = true;
+      startBtn.innerHTML = `<span>Loading</span><div class="spinner"></div>`;
+      setTimeout(() => {
+        coverSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+        showPage('page-dashboard');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        dashboardMain.classList.add('flash-animate');
+        setTimeout(() => {
+          dashboardMain.classList.remove('flash-animate');
+        }, 5000);
+      }, 1500);
+    });
+
+    menuToggle.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+
+    // Mobile submenu toggles
+    const mobileGuruMapelBtn = document.getElementById('mobileGuruMapelBtn');
+    const mobileGuruMapelMenu = document.getElementById('mobileGuruMapelMenu');
+    const mobileWaliKelasBtn = document.getElementById('mobileWaliKelasBtn');
+    const mobileWaliKelasMenu = document.getElementById('mobileWaliKelasMenu');
+    const mobileLaporanBtn = document.getElementById('mobileLaporanBtn');
+    const mobileLaporanMenu = document.getElementById('mobileLaporanMenu');
+
+    mobileGuruMapelBtn.addEventListener('click', () => {
+      if (mobileGuruMapelMenu.classList.contains('hidden')) {
+        mobileGuruMapelMenu.classList.remove('hidden');
+        mobileGuruMapelBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        mobileGuruMapelMenu.classList.add('hidden');
+        mobileGuruMapelBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    mobileWaliKelasBtn.addEventListener('click', () => {
+      if (mobileWaliKelasMenu.classList.contains('hidden')) {
+        mobileWaliKelasMenu.classList.remove('hidden');
+        mobileWaliKelasBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        mobileWaliKelasMenu.classList.add('hidden');
+        mobileWaliKelasBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    mobileLaporanBtn.addEventListener('click', () => {
+      if (mobileLaporanMenu.classList.contains('hidden')) {
+        mobileLaporanMenu.classList.remove('hidden');
+        mobileLaporanBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        mobileLaporanMenu.classList.add('hidden');
+        mobileLaporanBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Sidebar submenu toggles
+    const sidebarGuruMapelBtn = document.getElementById('sidebarGuruMapelBtn');
+    const sidebarGuruMapelMenu = document.getElementById('sidebarGuruMapelMenu');
+    const sidebarWaliKelasBtn = document.getElementById('sidebarWaliKelasBtn');
+    const sidebarWaliKelasMenu = document.getElementById('sidebarWaliKelasMenu');
+    const sidebarLaporanBtn = document.getElementById('sidebarLaporanBtn');
+    const sidebarLaporanMenu = document.getElementById('sidebarLaporanMenu');
+
+    sidebarGuruMapelBtn.addEventListener('click', () => {
+      if (sidebarGuruMapelMenu.classList.contains('hidden')) {
+        sidebarGuruMapelMenu.classList.remove('hidden');
+        sidebarGuruMapelBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        sidebarGuruMapelMenu.classList.add('hidden');
+        sidebarGuruMapelBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    sidebarWaliKelasBtn.addEventListener('click', () => {
+      if (sidebarWaliKelasMenu.classList.contains('hidden')) {
+        sidebarWaliKelasMenu.classList.remove('hidden');
+        sidebarWaliKelasBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        sidebarWaliKelasMenu.classList.add('hidden');
+        sidebarWaliKelasBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    sidebarLaporanBtn.addEventListener('click', () => {
+      if (sidebarLaporanMenu.classList.contains('hidden')) {
+        sidebarLaporanMenu.classList.remove('hidden');
+        sidebarLaporanBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        sidebarLaporanMenu.classList.add('hidden');
+        sidebarLaporanBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Page navigation logic
+    function showPage(pageId) {
+      const pages = [
+        'page-dashboard',
+        'page-guru-ikhwan',
+        'page-guru-akhwat',
+        'page-wali-ikhwan',
+        'page-wali-akhwat',
+        'page-login',
+        'page-mapel-list',
+      ];
+      pages.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id === pageId) {
+            el.classList.remove('hidden');
+            animateTextElements(el);
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function animateTextElements(container) {
+      const elements = container.querySelectorAll(
+        'h1, h2, h3, h4, h5, h6, p, button, a, .card-title, .card-subtitle, .card-icon, .login-label, .login-input, .login-button'
+      );
+      elements.forEach((el) => {
+        el.style.opacity = '0';
+        el.style.animation = 'none';
+        void el.offsetWidth;
+      });
+      let delay = 0;
+      elements.forEach((el) => {
+        el.style.animation = `fadeInUp 0.8s ease forwards`;
+        el.style.animationDelay = `${delay}s`;
+        el.style.opacity = '1';
+        delay += 0.1;
+      });
+    }
+
+    // Navigation buttons
+    const btnGuruMapelIkhwan = document.getElementById('btnGuruMapelIkhwan');
+    const btnGuruMapelAkhwat = document.getElementById('btnGuruMapelAkhwat');
+    const btnWaliKelasIkhwan = document.getElementById('btnWaliKelasIkhwan');
+    const btnWaliKelasAkhwat = document.getElementById('btnWaliKelasAkhwat');
+    const mobileBtnGuruMapelIkhwan = document.getElementById(
+      'mobileBtnGuruMapelIkhwan'
+    );
+    const mobileBtnGuruMapelAkhwat = document.getElementById(
+      'mobileBtnGuruMapelAkhwat'
+    );
+    const mobileBtnWaliKelasIkhwan = document.getElementById(
+      'mobileBtnWaliKelasIkhwan'
+    );
+    const mobileBtnWaliKelasAkhwat = document.getElementById(
+      'mobileBtnWaliKelasAkhwat'
+    );
+    const sidebarBtnGuruMapelIkhwan = document.getElementById(
+      'sidebarBtnGuruMapelIkhwan'
+    );
+    const sidebarBtnGuruMapelAkhwat = document.getElementById(
+      'sidebarBtnGuruMapelAkhwat'
+    );
+    const sidebarBtnWaliKelasIkhwan = document.getElementById(
+      'sidebarBtnWaliKelasIkhwan'
+    );
+    const sidebarBtnWaliKelasAkhwat = document.getElementById(
+      'sidebarBtnWaliKelasAkhwat'
+    );
+
+    function showListPage(pageId) {
+      showPage(pageId);
+    }
+
+    btnGuruMapelIkhwan.addEventListener('click', () => {
+      // Show umum list and hide diniyah list
+      document.getElementById('listGuruMapelUmum').style.display = 'grid';
+      document.getElementById('listGuruMapelIkhwan').style.display = 'none';
+      btnMapelUmumIkhwan.setAttribute('aria-pressed', 'true');
+      btnMapelDiniyahIkhwan.setAttribute('aria-pressed', 'false');
+      showListPage('page-guru-ikhwan');
+    });
+    btnMapelUmumIkhwan.addEventListener('click', () => {
+      document.getElementById('listGuruMapelUmum').style.display = 'grid';
+      document.getElementById('listGuruMapelIkhwan').style.display = 'none';
+      btnMapelUmumIkhwan.setAttribute('aria-pressed', 'true');
+      btnMapelDiniyahIkhwan.setAttribute('aria-pressed', 'false');
+    });
+    btnMapelDiniyahIkhwan.addEventListener('click', () => {
+      document.getElementById('listGuruMapelUmum').style.display = 'none';
+      document.getElementById('listGuruMapelIkhwan').style.display = 'grid';
+      btnMapelUmumIkhwan.setAttribute('aria-pressed', 'false');
+      btnMapelDiniyahIkhwan.setAttribute('aria-pressed', 'true');
+    });
+    btnGuruMapelAkhwat.addEventListener('click', () => showListPage('page-guru-akhwat'));
+    mobileBtnGuruMapelIkhwan.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      showListPage('page-guru-ikhwan');
+    });
+    mobileBtnGuruMapelAkhwat.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      showListPage('page-guru-akhwat');
+    });
+    btnWaliKelasIkhwan.addEventListener('click', () => {
+      showListPage('page-wali-ikhwan');
+      // Show updated wali kelas ikhwan list
+      waliIkhwanList.innerHTML = `
+       <button aria-label="M. Syahreza, S.Pd." class="card-button" data-login="wali-syahreza" data-name="M. Syahreza, S.Pd." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. Syahreza, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas VII Imam Ahmad</p>
+        </div>
+       </button>
+       <button aria-label="Sabran Zalukhu, S.Sos." class="card-button" data-login="wali-sabran" data-name="Sabran Zalukhu, S.Sos." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Sabran Zalukhu, S.Sos.</h4>
+         <p class="card-subtitle">Wali Kelas VII Imam Malik</p>
+        </div>
+       </button>
+       <button aria-label="M. Afdal, S.Pd." class="card-button" data-login="wali-afdal" data-name="M. Afdal, S.Pd." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. Afdal, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas Imam Syafi'i</p>
+        </div>
+       </button>
+      `;
+      attachCardButtonListeners();
+    });
+    btnWaliKelasAkhwat.addEventListener('click', () => showListPage('page-wali-akhwat'));
+    mobileBtnWaliKelasIkhwan.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      showListPage('page-wali-ikhwan');
+      // Show updated wali kelas ikhwan list
+      waliIkhwanList.innerHTML = `
+       <button aria-label="M. Syahreza, S.Pd." class="card-button" data-login="wali-syahreza" data-name="M. Syahreza, S.Pd." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. Syahreza, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas VII Imam Ahmad</p>
+        </div>
+       </button>
+       <button aria-label="Sabran Zalukhu, S.Sos." class="card-button" data-login="wali-sabran" data-name="Sabran Zalukhu, S.Sos." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Sabran Zalukhu, S.Sos.</h4>
+         <p class="card-subtitle">Wali Kelas VII Imam Malik</p>
+        </div>
+       </button>
+       <button aria-label="M. Afdal, S.Pd." class="card-button" data-login="wali-afdal" data-name="M. Afdal, S.Pd." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. Afdal, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas Imam Syafi'i</p>
+        </div>
+       </button>
+      `;
+      attachCardButtonListeners();
+    });
+    mobileBtnWaliKelasAkhwat.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      showListPage('page-wali-akhwat');
+    });
+    sidebarBtnGuruMapelIkhwan.addEventListener('click', () => showListPage('page-guru-ikhwan'));
+    sidebarBtnGuruMapelAkhwat.addEventListener('click', () => showListPage('page-guru-akhwat'));
+    sidebarBtnWaliKelasIkhwan.addEventListener('click', () => {
+      showListPage('page-wali-ikhwan');
+      // Show updated wali kelas ikhwan list
+      waliIkhwanList.innerHTML = `
+       <button aria-label="M. Syahreza, S.Pd." class="card-button" data-login="wali-syahreza" data-name="M. Syahreza, S.Pd." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. Syahreza, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas VII Imam Ahmad</p>
+        </div>
+       </button>
+       <button aria-label="Sabran Zalukhu, S.Sos." class="card-button" data-login="wali-sabran" data-name="Sabran Zalukhu, S.Sos." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">Sabran Zalukhu, S.Sos.</h4>
+         <p class="card-subtitle">Wali Kelas VII Imam Malik</p>
+        </div>
+       </button>
+       <button aria-label="M. Afdal, S.Pd." class="card-button" data-login="wali-afdal" data-name="M. Afdal, S.Pd." type="button">
+        <i class="fas fa-male card-icon"></i>
+        <div class="card-content">
+         <h4 class="card-title">M. Afdal, S.Pd.</h4>
+         <p class="card-subtitle">Wali Kelas Imam Syafi'i</p>
+        </div>
+       </button>
+      `;
+      attachCardButtonListeners();
+    });
+    sidebarBtnWaliKelasAkhwat.addEventListener('click', () => showListPage('page-wali-akhwat'));
+
+    // Password lists for Guru Ikhwan and Guru Mapel Diniyah Ikhwan
+    const guruIkhwanPasswords = [
+      'agung',
+      'beny',
+      'agus',
+      'jr',
+      'jery',
+      'jo',
+      'khaidir',
+      'afdal',
+      'parhun',
+      'hadi',
+      'roni',
+      'tsaqif',
+    ];
+    const guruDiniyahIkhwanPasswords = [
+      'asrul',
+      'okta',
+      'reza',
+      'irfan',
+      'sabran',
+      'suhaimi',
+      'zulfendi',
+      'ridho',
+    ];
+
+    // Passwords for Guru Mapel Umum Akhwat with new names and passwords
+    const guruUmumAkhwatPasswords = {
+      'bevi': 'bevi',
+      'erlina': 'erlina',
+      'herlina': 'herlina',
+      'ika': 'ika',
+      'lusi': 'lusi',
+      'melika': 'melika',
+      'nabila': 'nabila',
+      'sri-ayuni': 'yuyun',
+      'ryry': 'ryry',
+    };
+
+    // Add new passwords for Diniyah Akhwat teachers Mira, Nur, Ulfah, Yani
+    const guruDiniyahAkhwatPasswords = [
+      'mira',
+      'nur',
+      'ulfah',
+      'yani',
+      ...guruDiniyahIkhwanPasswords
+    ];
+
+    // Passwords for Wali Kelas Akhwat
+    const waliKelasAkhwatPasswords = {
+      'wali-sri-ayuni': 'yuyun',
+      'wali-yani-octavia': 'yani',
+    };
+
+    // Passwords for Wali Kelas Ikhwan (updated as per user request)
+    const waliKelasIkhwanPasswords = {
+      'wali-syahreza': 'reza',
+      'wali-sabran': 'sabran',
+      'wali-afdal': 'afdal',
+    };
+
+    // Link for all Mapel Umum and Diniyah on Guru Mapel Akhwat to Sejarah Kelas VII Maryam
+    const sejarahLink = 'https://docs.google.com/spreadsheets/d/1m7OLti-Es-8r-L-KyN8E2x_zMCrIxq4zyLArXAXP6Yk/edit?usp=drive_link';
+
+    // Updated mapel data keyed by login with detailed subjects and URLs for Guru Mapel Ikhwan including your new data
+    const mapelDataByLogin = {
+      'guru-agung': {
+        subject: 'IPS',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'IPS', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/1xG6JSFT6r3CdfwiafMsT2GRsJ83Vbkm_X9mzzJ0nOj4/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'IPS', icon: 'fas fa-book-open', url: 'https://docs.google.com/spreadsheets/d/13woB43xxoqIhiI4RBZfRHylOXXZOIyfcdT_wKrclVvk/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'IPS', icon: 'fas fa-scroll', url: 'https://docs.google.com/spreadsheets/d/1Fwf3ePvMVwKKtm3umVdTTEkUfFqKKINVMDwUItLKbfk/edit?usp=drive_link' },
+                  ],
+      },
+      'guru-beny': {
+        subject: 'IPA',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'IPA', icon: 'fas fa-flask', url: '' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'IPA', icon: 'fas fa-flask', url: '' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'IPA', icon: 'fas fa-flask', url: '' },
+        ],
+      },
+      'guru-agus': {
+        subject: 'IPA',
+        mapels: [
+          { title: 'Kelas VII Imam Malik', subtitle: 'IPA', icon: 'fas fa-flask', url: 'https://docs.google.com/spreadsheets/d/1FexPqhuMCvofTczLAIPonc2wg6AssPZ5ad1nNCeV3Ng/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'IPA', icon: 'fas fa-flask', url: 'https://docs.google.com/spreadsheets/d/1j7mFtFv1Uw1P5rQnaUl0SCgjirvCEcjoqFqQZZFZHNo/edit?usp=drive_link' },
+        ],
+      },
+      'guru-jr': {
+        subject: 'Pendidikan Pancasila',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Pendidikan Pancasila', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/11KeNZbWtHmZsu1DArWc74CFvm4lTIuFmoJ4fbsFBCus/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Pendidikan Pancasila', icon: 'fas fa-book-open', url: 'https://docs.google.com/spreadsheets/d/1dPbNSohoxg1u7joxiQKUzbDk9RgS5aqdp-5IU8Tg6kI/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Pendidikan Pancasilas', icon: 'fas fa-scroll', url: 'https://docs.google.com/spreadsheets/d/1HGiII8iNYBrrg6II7kwBcwrTAvx_zt8S_elm1JwlNdQ/edit?usp=drive_link' },
+        ],
+      },
+      'guru-jery': {
+        subject: 'Bahasa Indonesia',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Bahasa Indonesia', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/18uIgFiOoI1z4P_4IDlV5WHsNSBdHCheCcKw5CyaQo0o/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Bahasa Indonesia', icon: 'fas fa-book-open', url: 'https://docs.google.com/spreadsheets/d/1QBdxDD-HWMkSIuULKsap8RylHdxLlOF4uFhDpiMOlnQ/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Bahasa Indonesia', icon: 'fas fa-scroll', url: 'https://docs.google.com/spreadsheets/d/1iCWuI_fXgu_X3bA6Ds8WphVj7P3bs1YinEEmRq7bk-s/edit?usp=drive_link' },
+        ],
+      },
+      'guru-jo': {
+        subject: 'Matematika',
+        mapels: [ 
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Matematika', icon: 'fas fa-square-root-alt', url: 'https://docs.google.com/spreadsheets/d/1wAn1Aox1-tM65F6k3Wzzc3qZxW0I9ecDBQCXQcMtxyU/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Matematika', icon: 'fas fa-square-root-alt', url: 'https://docs.google.com/spreadsheets/d/1tHdcPnJj4lBwBZjSeleLO3csQds0S4dQBAV6gEserhg/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Matematika', icon: 'fas fa-square-root-alt', url: 'https://docs.google.com/spreadsheets/d/1PCt20K6jxgz4RzapE1YK2J-7BSOuysbOmhsR3cs7uMw/edit?usp=drive_link' },
+        ],
+      },
+      'guru-khaidir': {
+        subject: 'Bahasa Indonesia',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Bahasa Indonesia', icon: 'fas fa-book-reader', url: '' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Bahasa Indonesia', icon: 'fas fa-book-open', url: '' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Bahasa Indonesia', icon: 'fas fa-scroll', url: '' },
+        ],
+      },
+      'guru-afdal': {
+        subject: 'Matematika',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Matematika', icon: 'fas fa-square-root-alt', url: '' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Matematika', icon: 'fas fa-square-root-alt', url: '' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Matematika', icon: 'fas fa-square-root-alt', url: '' },
+        ],
+      },
+      'guru-parhun': {
+        subject: 'Bahasa Inggris',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Bahasa Inggris', icon: 'fas fa-language', url: 'https://docs.google.com/spreadsheets/d/1ZC0vGgYldZTWU-V2TriCEOnzdIbawut-YLuT1Fo5PZY/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Bahasa Inggris', icon: 'fas fa-language', url: 'https://docs.google.com/spreadsheets/d/1Yxo0wEmUbVpfJKXkwpuKuVuj9PiPu2PV1WkbN_KEZqM/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Bahasa Inggris', icon: 'fas fa-language', url: 'https://docs.google.com/spreadsheets/d/1uoc2kHotn4qihRh5JrsXgC19niR2osRmbxu4cBE3fJ0/edit?usp=drive_link' },
+        ],
+      },
+      'guru-hadi': {
+        subject: 'IPA',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'IPA', icon: 'fas fa-flask', url: '' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'IPA', icon: 'fas fa-flask', url: '' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'IPA', icon: 'fas fa-flask', url: '' },
+        ],
+      },
+      'guru-roni': {
+        subject: 'Bahasa Indonesia',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'Bahasa Indonesia', icon: 'fas fa-book-reader', url: '' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'Bahasa Indonesia', icon: 'fas fa-book-open', url: '' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'Bahasa Indonesia', icon: 'fas fa-scroll', url: '' },
+        ],
+      },
+      'guru-tsaqif': {
+        subject: 'TIK',
+        mapels: [
+          { title: 'Kelas VII Imam Ahmad', subtitle: 'TIK', icon: 'fas fa-laptop-code', url: 'https://docs.google.com/spreadsheets/d/1Ysp_r6Mj5HJe9a-9AFBsKudgeR4bQ3qWOWMB7g3BvdU/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Malik', subtitle: 'TIK', icon: 'fas fa-laptop-code', url: 'https://docs.google.com/spreadsheets/d/1KFt7k5yIIRnmWNyetV9eVCWfAsl5NP0l5xsPA-Zt-4E/edit?usp=drive_link' },
+          { title: 'Kelas VII Imam Syafii', subtitle: 'TIK', icon: 'fas fa-laptop-code', url: 'https://docs.google.com/spreadsheets/d/1hM4UnaG_NnGQz8HbmuPQNNjCMjoar-SGO6_v7useTP8/edit?usp=drive_link' },
+        ],
+      },
+      'guru-okta': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: "ALQUR'AN & HADIST Kelas VII Imam Ahmad", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1ftfCY0odaO77asKewm9pZv0S0l1xjqJCcb4nL84yiaU/edit?usp=drive_link' },
+          { title: "ALQUR'AN & HADIST Kelas VII Imam Malik", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1zeIqqeENjXmUg_D1ppanw6UAjH0FgMfvovNZWH8S62U/edit?usp=drive_link' },
+          { title: "ALQUR'AN & HADIST Kelas VII Imam Syafi'i", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/173O56glrXoMF64-f_srrWV24Al5Dz0gYcR1vkNTj6s0/edit?usp=drive_link' },
+          { title: "TAHSIN AL-QUR'AN Kelas VII Imam Ahmad", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1JHBIuh9ysxkQ9x6FhkWaXaOIVqREkAKEpBdnjwmwbLI/edit?usp=drive_link' },
+          { title: "TAHSIN AL-QUR'AN Kelas VII Imam Malik", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1of9cODA6Rz8C7-TOuRYgXMfieULe7hA9r63ZxyUwqNQ/edit?usp=drive_link' },
+          { title: "TAHSIN AL-QUR'AN Kelas VII Imam Syafi'i", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1MP-a-OX5_zG3jX8s2AS97-G8Cq-77mKyZGiL9X_J1eU/edit?usp=drive_link' },
+          { title: "TAHFIDZ AL-QUR'AN Kelas VII Imam Ahmad", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1g4QYAwwr3KK95_wUaB6tRb42RPocn-hbPQOFzM5WZq4/edit?usp=drive_link' },
+          { title: "TAHFIDZ AL-QUR'AN Kelas VII Imam Malik", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1rie5GUZlUbiBO2pt26yHupA1yr03l0fCtenBU0FuGVc/edit?usp=drive_link' },
+          { title: "TAHFIDZ AL-QUR'AN Kelas VII Imam Syafi'i", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/15RpEd84HuUX-XUjtoBTHNQ1Ym8B6oVMwrV8XQpjauJ0/edit?usp=drive_link' },
+        ],
+      },
+      'guru-irfan': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: 'FIQIH Kelas VII Asma', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1foFGNP_qCV6Po5q3egxqm3_2T5UkJMIvK057TpItpbQ/edit?usp=drive_link' },
+          { title: 'FIQIH Kelas VII Maryam', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/16YYurh585ypQI5pHCR-AU_6lkc_O8P1Z0OJO9HMO-Rk/edit?usp=drive_link' },
+        ],
+      },
+      'guru-reza': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: 'AQIDAH, AKHLAK & ADAB Kelas VII Imam Ahmad', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1nxmRGcCjL2B5IiRZ8p1vY1FzrWo_6Rf85QpKTQ0Gzj4/edit?usp=drive_link' },
+          { title: 'AQIDAH, AKHLAK & ADAB Kelas VII Imam Malik', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/10COxLlrcg62y1ooWTJNh6midU7yQzkq7Qj-dhzShB_Q/edit?usp=drive_link' },
+          { title: 'AQIDAH, AKHLAK & ADAB Kelas VII Imam Syafi\'i', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/13pN8_Dcn7ZQJB1k5QEjtAfMzK3UzCF9xwQtCVRVrpEI/edit?usp=drive_link' },
+          { title: 'BAHASA ARAB KELAS VII IMAM AHMAD', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1dUtclT9SiXTBd1dUZvRrK93tFnL7j_MqPuG0Kd_c93E/edit?usp=drive_link' },
+          { title: 'SBK KELAS VII IMAM AHMAD', subtitle: 'Mapel Umum', icon: 'fas fa-paint-brush', url: 'https://docs.google.com/spreadsheets/d/16y_nI9GvNeNiEYhsKPZmu5-29PmPJrburvPoKPkUftI/edit?usp=drive_link' },
+          { title: 'PJOK KELAS VII IMAM AHMAD', subtitle: 'Mapel Umum', icon: 'fas fa-running', url: 'https://docs.google.com/spreadsheets/d/1KEeKM8WPp8SPQXLH-WybcOW14MlVOHRoLhxS2sbvw18/edit?usp=drive_link'  },
+        ],
+      },
+      'guru-sabran': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: 'BAHASA ARAB KELAS VII IMAM MALIK', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1C0K12ve4MNocDI8uzdwdWajSJaP7UdhpHf7aRU0V95w/edit?usp=drive_link' },
+          { title: 'FIQIH KELAS VII IMAM AHMAD', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1mTLeKFYYRfNxX_eUdhjJMgJn214-eJp08OyXGrAjBTo/edit?usp=drive_link' },
+          { title: 'Fiqih KELAS VII IMAM AHMAD', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1MmZ1kO8kqpiKWopOiVoLaKwVenZ-XofQeAqPoM2rvUM/edit?usp=drive_link' },
+          { title: 'FIQIH KELAS VII IMAM SYAFI\'I', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1vdYRQ9vpaVR7mEr7IdKZcxCG_nmdlnXGAjiNb-gmkt4/edit?usp=drive_link' },
+          { title: 'PJOK KELAS VII IMAM MALIK', subtitle: 'Mapel Umum', icon: 'fas fa-running', url: 'https://docs.google.com/spreadsheets/d/1fcx2W23GMgQHdq3c0dwpb4TgU12kYwgB8INW1rADhpk/edit?usp=drive_link' },
+          { title: 'SBK KELAS VII IMAM MALIK', subtitle: 'Mapel Umum', icon: 'fas fa-paint-brush', url: 'https://docs.google.com/spreadsheets/d/19-I0HJJj_OQP_IuuqtnOcRZ6WfOsUiwLwTlNI91BkVo/edit?usp=drive_link' },
+        ],
+      },
+      'guru-suhaimi': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: 'SBK KELAS VII IMAM SYAFI\I', subtitle: 'Mapel Umum', icon: 'fas fa-paint-brush', url: 'https://docs.google.com/spreadsheets/d/1XTUbvgun9gKPZ8VtM8OPYoGkqYK4ZtavTrtRiQ7r4Pc/edit?usp=drive_link' },
+          { title: 'SKI/TARIKH KELAS VII IMAM AHMAD', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/13J-ZCqUGxvIfHZXJeqvPCDzF1xnYD6NYiSzbQwxKyHo/edit?usp=drive_link' },
+          { title: 'SKI/Tarikh Kelas VII IMAM MALIK', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1NYaTlpBneDexe2h7avG3ylC2ECdvJx3n5HtuN571PyQ/edit?usp=drive_link' },
+          { title: 'SKI/Tarikh Kelas VII IMAM SYAFI\'I', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1LbwEdkAnLpy2aMmFk4XbDHp64sNNItNBUhXNQ5ob4Hk/edit?usp=drive_link' },
+        ],
+      },
+      'guru-zulfendi': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: 'BAHASA ARAB KELAS VII IMAM AHMAD', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1dUtclT9SiXTBd1dUZvRrK93tFnL7j_MqPuG0Kd_c93E/edit?usp=drive_link' },
+          { title: 'BAHASA ARAB KELAS VII IMAM SYAFI\'I', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1R6Md65Fgtj9n_hDaqyP5dEqOS7l1ojOagjduKJISDtE/edit?usp=drive_link' },
+        ],
+      },
+      'guru-ridho': {
+        subject: 'Mapel Diniyah',
+        mapels: [
+          { title: 'KHOT KELAS VII IMAM AHMAD', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/14nJ7kPyCF6g5a3UQguloZd5Yebur4RaFfD0U024veEs/edit?usp=drive_link' },
+          { title: 'KHOT KELAS VII IMAM MALIK', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1Jmga6oNVMqPJuqOR0PZNRdHV-FHhzLgPGY-PC7dVOfY/edit?usp=drive_link' },
+          { title: 'KHOT KELAS VII IMAM SYAFI\'I', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1YKX8My1Cd6AMWT6ps-mrTbzbRnT0R1uMDglToI725pA/edit?usp=drive_link' },
+          { title: 'NAHWU KELAS VII IMAM MALIK', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1lgZNrdOAQBBxLaE2XpZ2to8Awyw07QAGxuYV2c52yKk/edit?usp=drive_link' },
+        ],
+      },
+      'guru-bevi': {
+        subject: 'IPA',
+        mapels: [
+          { title: 'IPA KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-flask', url: 'https://docs.google.com/spreadsheets/d/1g74CKT7N_7vx_P7aF7X3HESHsmvdGziNqzFjQBaGT6E/edit?usp=drive_link' },
+        ],
+      },
+      'guru-erlina': {
+        subject: 'Bahasa Inggris',
+        mapels: [
+          { title: 'BAHASA INGGRIS KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-language', url: 'https://docs.google.com/spreadsheets/d/1wjlrZ0pyiNnl03fHhleVTaCIxrfeCkk1Bz9mHNBvUr4/edit?usp=drive_link' },
+          { title: 'BAHASA INGGRIS KELAS VII MARYAM', subtitle: 'Mapel Umum', icon: 'fas fa-language', url: 'https://docs.google.com/spreadsheets/d/1lvX2zy6nI-K_W_2yK4o2bYdBOWDZXjhOQQ3oizSiB3A/edit?usp=drive_link' },
+        ],
+      },
+      'guru-herlina': {
+        subject: 'Teknologi Informasi & Komunikasi',
+        mapels: [
+          { title: 'TIK KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-laptop-code', url: 'https://docs.google.com/spreadsheets/d/13L_HJK1_BIMckKRqjOxXCsqSIRmgWpQnQ0zvRQZ6g5U/edit?usp=drive_link' },
+          { title: 'TIK Kelas VII MARYAM', subtitle: 'Mapel Umum', icon: 'fas fa-laptop-code', url: 'https://docs.google.com/spreadsheets/d/1BiQdI9qLvJEsHjl0OVtjLzXQYolVZcgzr1eEoJfv3VY/edit?usp=drive_link' },
+        ],
+      },
+      'guru-ika': {
+        subject: 'IPA Terpadu',
+        mapels: [
+          { title: 'IPA KELAS VII MARYAM', subtitle: 'Mapel Umum', icon: 'fas fa-flask', url: 'https://docs.google.com/spreadsheets/d/1btfdKLpIN75PvLtPxM-KjEPZDmvm2GhMC0Kcqpz3Wv4/edit?usp=drive_link' },
+        ],
+      },
+      'guru-lusi': {
+        subject: 'IPA',
+        mapels: [
+          { title: 'IPA KELAS VII IMAM AHMAD', subtitle: 'Mapel Umum', icon: 'fas fa-flask', url: 'https://docs.google.com/spreadsheets/d/1_LGsAjKWLt4AQyCf-XvNna0p8jNebZWsBbk0hvjETDE/edit?usp=drive_link' },
+        ],
+      },
+      'guru-melika': {
+        subject: 'MATEMATIKA',
+        mapels: [
+          { title: 'MATEMATIKA KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-square-root-alt', url: 'https://docs.google.com/spreadsheets/d/1eIrqKYfLm3X7kp7hMdOZLi4EtsubEUdwcb-jPzuZOB4/edit?usp=drive_link' },
+          { title: 'MATEMATIKA KELAS VII MARYAM', subtitle: 'Mapel Umum', icon: 'fas fa-square-root-alt', url: 'https://docs.google.com/spreadsheets/d/1-EPkwCBECmS4YSg4tssRTFZoHF8jfjNk1MTkgQS_RuY/edit?usp=drive_link' },
+        ],
+      },
+      'guru-nabila': {
+        subject: 'Bahasa Indonesia',
+        mapels: [
+          { title: 'BAHASA INDONESIA KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/1FNrfV0ZqTZF-KhWrvi_glQGzd8mReZ8KFPsSGFC6bPY/edit?usp=drive_link' },
+          { title: 'BAHASA INDONESIA KELAS VII MARYAM', subtitle: 'Mapel Umum', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/1GNaTZYyf9STH_dz2tf0RFZhk9v_gTGXo5hvShtrUn1A/edit?usp=drive_link' },
+        ],
+      },
+      'guru-yuyun': {
+        subject: 'IPS',
+        mapels: [
+          { title: 'IPS KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-history', url: 'https://docs.google.com/spreadsheets/d/1_WjF50RmHyxnZu3EgiUSFJi4yHxeUIQKJYAQOnTUxxA/edit?usp=drive_link' },
+          { title: 'IPS Kelas VII Maryam', subtitle: 'Mapel Umum', icon: 'fas fa-history', url: 'https://docs.google.com/spreadsheets/d/1sO-hLWJmLAM_gUCOmnkXr3j86grumdKAx92iNfpC6EQ/edit?usp=drive_link' },
+        ],
+      },
+      'guru-ryry': {
+        subject: 'PENDIDIKAN PANCASILA',
+        mapels: [
+          { title: 'PENDIDIKAN PANCASILA KELAS VII ASMA', subtitle: 'Mapel Umum', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/1_WjF50RmHyxnZu3EgiUSFJi4yHxeUIQKJYAQOnTUxxA/edit?usp=drive_link' },
+          { title: 'PENDIDIKAN PANCASILIA KELAS VII MARYAM', subtitle: 'Mapel Umum', icon: 'fas fa-book-reader', url: 'https://docs.google.com/spreadsheets/d/1iQntVPrJKv-6-gVxaey6DdCtQD9aOqw0WepMc8acqDs/edit?usp=drive_link' },
+        ],
+      },
+      'guru-mira': {
+        subject: 'AQIDAH, AKHLAK, & ADAB',
+        mapels: [
+          { title: 'AQIDAH, AKHLAK, & ADAB Kelas VII Asma', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1fkOhJaYkupwztseY4RoJTJRXKaGN1eb9IwgyfzOZQ1k/edit?usp=drive_link' },
+          { title: 'AQIDAH, AKHLAK, & ADAB Kelas VII Maryam', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1-Ox7sORRThF1uHlJ7d8DM8_gcxlZcB61y9LK-s9JM48/edit?usp=drive_link' },
+          { title: "AL-QUR'AN & HADIST KELAS VII ASMA", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1EeTIFEprYJ5yhlRXd5XLvlyNi2e39blNYg2BRyDOLks/edit?usp=drive_link' },
+          { title: "AL-QUR'AN & HADIST KELAS VII MARYAM", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1DyLA5AhROhi7QFI6f5IHhuWg99uOa6luhgN-aHsROHk/edit?usp=drive_link' },
+        ],
+      },
+      'guru-nur': {
+        subject: 'SKI/TARIKH, TAHSIN AL-QURAN, TAHFIDZ AL-QURAN',
+        mapels: [
+          { title: 'SKI/TARIKH KELAS VII ASMA', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/16Wkz-abIwFXpQjlhLYAp-2WBZnkxN4CYcm4kfe8jkEI/edit?usp=drive_link' },
+          { title: 'SKI/TARIKH KELAS VII MARYAM', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/11C_VOFgooANJUYTAV4KaEomRs3py96WpaCpoCwP_hdw/edit?usp=drive_link' },
+          { title: "TAHSIN AL-QUR'AN KELAS VII ASMA", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1Ly09H4qYMXXWt5Qd6H_iKeWZi0nK1Y9fm0AN6zkXp-M/edit?usp=drive_link' },
+          { title: "TAHSIN AL-QUR'AN KELAS VII MARYAM", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1bcWRl08_i2SDVWxFyRCr-XT1ZiwN0JeM0uh5Ty0W7bA/edit?usp=drive_link' },
+          { title: "TAHFIDZ AL-QUR'AN KELAS VII ASMA", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1f395wgX_dPwboy_iQkMvSSsbdXazqBEDfm_64Nyffh0/edit?usp=drive_link' },
+          { title: "TAHFIDZ AL-QUR'AN KELAS VII MARYAM", subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1HEkQmZG7wxaJJkjW-vHuq8Ziyf23scLba79xLpge5lc/edit?usp=drive_link' },
+        ],
+      },
+      'guru-ulfah': {
+        subject: 'Nahwu',
+        mapels: [
+          { title: 'NAHWU KELAS VII ASMA', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1gupO2s2IqP-JXSjMg1XLCWDEgz61t8Bhm5ZzMbASyMQ/edit?usp=drive_link' },
+          { title: 'NAHWU KELAS VII MARYAM', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1VV4Q9zUW1xBzIDkipiB5V63OAedya4hiw9RqDUetK24/edit?usp=drive_link' },
+        ],
+      },
+      'guru-yani': {
+        subject: 'Bahasa Arab',
+        mapels: [
+          { title: 'BAHASA ARAB KELAS VII ASMA', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1uqJEF3SxJJiADCUBxGP244XLrKZpZydj0Vrh6KLVK5g/edit?usp=drive_link' },
+          { title: 'Bahasa Arab Kelas VII Maryam', subtitle: 'Mapel Diniyah', icon: 'fas fa-book', url: 'https://docs.google.com/spreadsheets/d/1bqlT2JhFvsFMJoExWvy-qosC5f-TITqqbDMZ8AsRds0/edit?usp=drive_link' },
+        ],
+      },
+    };
+
+    const cardButtons = document.querySelectorAll('.card-button');
+    let currentUserType = '';
+    let currentUserName = '';
+    let currentUserLogin = '';
+
+    function getUserTypeFromPageId(pageId) {
+      switch (pageId) {
+        case 'page-guru-ikhwan':
+          return 'Guru Mapel Ikhwan';
+        case 'page-guru-akhwat':
+          return 'Guru Mapel Akhwat';
+        case 'page-wali-ikhwan':
+          return 'Wali Kelas Ikhwan';
+        case 'page-wali-akhwat':
+          return 'Wali Kelas Akhwat';
+        default:
+          return '';
+      }
+    }
+
+    function attachCardButtonListeners() {
+      const newCardButtons = document.querySelectorAll('#waliIkhwanList .card-button');
+      newCardButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const visibleListPage = ['page-guru-ikhwan', 'page-guru-akhwat', 'page-wali-ikhwan', 'page-wali-akhwat'].find(
+            (id) => {
+              const el = document.getElementById(id);
+              return el && !el.classList.contains('hidden');
+            }
+          );
+          currentUserType = getUserTypeFromPageId(visibleListPage);
+          currentUserName = button.getAttribute('data-name') || '';
+          currentUserLogin = button.getAttribute('data-login') || '';
+          loginTitle.textContent = currentUserType;
+          loginNameDisplay.textContent = currentUserName;
+          loginForm.reset();
+          showPage('page-login');
+        });
+      });
+    }
+
+    attachCardButtonListeners();
+
+    cardButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const visibleListPage = ['page-guru-ikhwan', 'page-guru-akhwat', 'page-wali-ikhwan', 'page-wali-akhwat'].find(
+          (id) => {
+            const el = document.getElementById(id);
+            return el && !el.classList.contains('hidden');
+          }
+        );
+        currentUserType = getUserTypeFromPageId(visibleListPage);
+        currentUserName = button.getAttribute('data-name') || '';
+        currentUserLogin = button.getAttribute('data-login') || '';
+        loginTitle.textContent = currentUserType;
+        loginNameDisplay.textContent = currentUserName;
+        loginForm.reset();
+        showPage('page-login');
+      });
+    });
+
+    backToListBtn.addEventListener('click', () => {
+      switch (currentUserType) {
+        case 'Guru Mapel Ikhwan':
+          showPage('page-guru-ikhwan');
+          break;
+        case 'Guru Mapel Akhwat':
+          showPage('page-guru-akhwat');
+          break;
+        case 'Wali Kelas Ikhwan':
+          showPage('page-wali-ikhwan');
+          break;
+        case 'Wali Kelas Akhwat':
+          showPage('page-wali-akhwat');
+          break;
+        default:
+          showPage('page-dashboard');
+      }
+    });
+
+    backToGuruIkhwanBtn.addEventListener('click', () => {
+      showPage('page-guru-ikhwan');
+    });
+
+    function renderMapelListForUser(login, name) {
+      const data = mapelDataByLogin[login];
+      if (!data) {
+        mapelList.innerHTML = `<p class="text-gray-700 text-center col-span-full">Tidak ada data mapel untuk guru ini.</p>`;
+        mapelListTitle.textContent = `Daftar Mapel yang Diajar oleh ${name}`;
+        return;
+      }
+      mapelListTitle.textContent = `Daftar Mapel yang Diajar oleh ${name}`;
+      mapelList.innerHTML = '';
+      data.mapels.forEach((mapel, index) => {
+        const card = document.createElement('button');
+        card.className = 'mapel-card';
+        card.style.animationDelay = `${index * 0.15}s`;
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Mapel ${mapel.title} dengan subjek ${mapel.subtitle}`);
+        card.type = 'button';
+
+        // Add custom class based on title content for color
+        if (mapel.title.includes('Kelas VII Imam Ahmad')) {
+          card.classList.add('kelas-imam-ahmad');
+        } else if (mapel.title.includes('Kelas VII Imam Malik')) {
+          card.classList.add('kelas-imam-malik');
+        } else if (mapel.title.includes("Kelas VII Imam Syafii")) {
+          card.classList.add('kelas-imam-syafii');
+        }
+
+        const icon = document.createElement('i');
+        icon.className = `mapel-icon ${mapel.icon}`;
+        card.appendChild(icon);
+
+        const title = document.createElement('span');
+        title.textContent = mapel.title;
+        card.appendChild(title);
+
+        const subtitle = document.createElement('span');
+        subtitle.className = 'mapel-subtitle';
+        subtitle.textContent = mapel.subtitle;
+        card.appendChild(subtitle);
+
+        if (mapel.url) {
+          card.style.cursor = 'pointer';
+          card.addEventListener('click', () => {
+            window.open(mapel.url, '_blank', 'noopener');
+          });
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.open(mapel.url, '_blank', 'noopener');
+            }
+          });
+        }
+
+        mapelList.appendChild(card);
+      });
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const password = loginForm.password.value.trim().toLowerCase();
+      const username = currentUserName.trim();
+
+      let valid = false;
+
+      if (currentUserType === 'Guru Mapel Ikhwan') {
+        const visibleUmum = document.getElementById('listGuruMapelUmum').style.display !== 'none';
+        if (visibleUmum) {
+          valid = guruIkhwanPasswords.includes(password);
+        } else {
+          valid = guruDiniyahIkhwanPasswords.includes(password);
+        }
+      } else if (currentUserType === 'Guru Mapel Akhwat') {
+        valid = guruUmumAkhwatPasswords[currentUserLogin?.replace('guru-', '')] === password || guruDiniyahAkhwatPasswords.includes(password);
+      } else if (currentUserType === 'Wali Kelas Akhwat') {
+        // Special case for Yani Octavia, S.Pd.
+        if (username === 'Yani Octavia, S.Pd.' && password === 'yani') {
+          valid = true;
+        } else {
+          valid = waliKelasAkhwatPasswords[currentUserLogin] === password;
+        }
+      } else if (currentUserType === 'Wali Kelas Ikhwan') {
+        valid = waliKelasIkhwanPasswords[currentUserLogin] === password;
+      } else {
+        valid = password === 'password123';
+      }
+
+      if (valid) {
+        // Check if user is a wali kelas with exact username and password match for redirect
+        if (username === 'Yani Octavia, S.Pd.' && password === 'yani') {
+          showNotification('success', `Login berhasil untuk ${username}`, 1500);
+          setTimeout(() => {
+            window.open('https://docs.google.com/spreadsheets/d/1sDgvyCKeGq9ufPO2OK0Un-lPNQu1029lJrYTCMG7C8I/edit?usp=drive_link', '_blank', 'noopener');
+            showPage('page-dashboard');
+          }, 1500);
+          return;
+        }
+        if (waliKelasSpreadsheetLinks.hasOwnProperty(username)) {
+          const waliData = waliKelasSpreadsheetLinks[username];
+          if (waliData.password === password) {
+            showNotification('success', `Login berhasil untuk ${username}`, 1500);
+            setTimeout(() => {
+              window.open(waliData.url, '_blank', 'noopener');
+              showPage('page-dashboard');
+            }, 1500);
+            return;
+          }
+        }
+        // If wali kelas but no match or not wali kelas, check if normal user
+        if (dashboardWelcome) {
+          dashboardWelcome.textContent = `Selamat datang, ${username}`;
+        }
+        if (welcomeMessage) {
+          welcomeMessage.textContent = `Selamat datang, ${username}`;
+        }
+        const umumGuruLogins = [
+          'guru-agung',
+          'guru-beny',
+          'guru-agus',
+          'guru-jo',
+          'guru-khaidir',
+          'guru-afdal',
+          'guru-parhun',
+          'guru-hadi',
+          'guru-roni',
+          'guru-tsaqif',
+          'guru-jr',
+          'guru-jery'
+        ];
+        if (umumGuruLogins.includes(currentUserLogin)) {
+          showNotification('success', `Login berhasil untuk ${username}`, 500);
+          setTimeout(() => {
+            renderMapelListForUser(currentUserLogin, username);
+            showPage('page-mapel-list');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 500);
+        } else if (guruDiniyahIkhwanPasswords.includes(password) || Object.values(guruUmumAkhwatPasswords).includes(password) || guruDiniyahAkhwatPasswords.includes(password)) {
+          showNotification('success', `Login berhasil untuk ${username}`, 500);
+          setTimeout(() => {
+            renderMapelListForUser(currentUserLogin, username);
+            showPage('page-mapel-list');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }, 500);
+        } else {
+          showNotification('success', 'Login berhasil, tetapi pengguna tidak dikenali. Silakan hubungi admin.', 4000);
+          setTimeout(() => {
+            showPage('page-dashboard');
+          }, 4000);
+        }
+      } else {
+        showNotification('error', 'Password salah! Silakan coba lagi. 😢', 4000);
+        loginForm.password.focus();
+      }
+    });
+
+    document.querySelectorAll('[data-page]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const page = link.getAttribute('data-page');
+        showPage('page-' + page);
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+
+    function updateLoginVisibility() {
+      const loginSection = document.getElementById('page-login');
+      const visiblePages = [
+        'page-dashboard',
+        'page-guru-ikhwan',
+        'page-guru-akhwat',
+        'page-wali-ikhwan',
+        'page-wali-akhwat',
+        'page-mapel-list',
+      ];
+      let hideLogin = false;
+      visiblePages.forEach((pageId) => {
+        const el = document.getElementById(pageId);
+        if (el && !el.classList.contains('hidden')) {
+          hideLogin = true;
+        }
+      });
+      if (hideLogin) {
+        loginSection.style.display = 'none';
+      } else {
+        loginSection.style.display = 'flex';
+      }
+    }
+
+    const originalShowPage = showPage;
+    showPage = function (pageId) {
+      originalShowPage(pageId);
+      updateLoginVisibility();
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateLoginVisibility();
+    });
+
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePassword.classList.toggle('fa-eye');
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+    togglePassword.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        togglePassword.click();
+      }
+    });
+
+    const btnMapelUmumAkhwat = document.getElementById('btnMapelUmumAkhwat');
+    const btnMapelDiniyahAkhwat = document.getElementById('btnMapelDiniyahAkhwat');
+    const listGuruMapelAkhwat = document.getElementById('listGuruMapelAkhwat');
+
+    function filterGuruMapelAkhwat(type) {
+      if (!listGuruMapelAkhwat) return;
+      const cards = listGuruMapelAkhwat.querySelectorAll('.card-button');
+      cards.forEach((card) => {
+        if (type === 'all' || card.getAttribute('data-mapel') === type) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    btnMapelUmumAkhwat.addEventListener('click', () => {
+      filterGuruMapelAkhwat('umum');
+      btnMapelUmumAkhwat.setAttribute('aria-pressed', 'true');
+      btnMapelDiniyahAkhwat.setAttribute('aria-pressed', 'false');
+    });
+    btnMapelDiniyahAkhwat.addEventListener('click', () => {
+      filterGuruMapelAkhwat('diniyah');
+      btnMapelUmumAkhwat.setAttribute('aria-pressed', 'false');
+      btnMapelDiniyahAkhwat.setAttribute('aria-pressed', 'true');
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      filterGuruMapelAkhwat('umum');
+      btnMapelUmumAkhwat.setAttribute('aria-pressed', 'true');
+      btnMapelDiniyahAkhwat.setAttribute('aria-pressed', 'false');
+    });
+  </script>
+ </body>
+</html>
